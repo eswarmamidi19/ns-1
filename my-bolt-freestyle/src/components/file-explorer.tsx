@@ -227,6 +227,8 @@ import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
 import * as Tabs from "@radix-ui/react-tabs"; 
 import { Editor } from "@monaco-editor/react";
+import Preview from "./Preview";
+import XTermTerminal from "./terminal";
 
 export interface File {
   id: string;
@@ -389,17 +391,26 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
               <Tabs.Root defaultValue="code" className="flex-1 flex flex-col">
                 <div className="border-b px-4 bg-gray-800/80">
                   <Tabs.List className="h-10 flex gap-2 bg-gray-900 rounded-md p-1 w-fit mt-4 mb-2">
+
                     <Tabs.Trigger
                       value="code"
                       className="px-4 py-1 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
                     >
                       Code
                     </Tabs.Trigger>
+
                     <Tabs.Trigger
                       value="preview"
                       className="px-4 py-1 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
                     >
                       Preview
+                    </Tabs.Trigger>
+
+                     <Tabs.Trigger
+                      value="terminal"
+                      className="px-4 py-1 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
+                    >
+                      terminal
                     </Tabs.Trigger>
                   </Tabs.List>
                 </div>
@@ -446,11 +457,14 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
                   value="preview"
                   className="flex-1 p-4 overflow-auto data-[state=active]:flex"
                 >
-                  <div className="border rounded-md p-6 w-full h-full flex items-center justify-center">
-                    <p className="text-muted-foreground w-full flex justify-center">
-                      Preview not available
-                    </p>
-                  </div>
+                  <Preview/>
+                </Tabs.Content>
+
+                  <Tabs.Content
+                  value="terminal"
+                  className="flex-1 p-4 overflow-auto data-[state=active]:flex"
+                >
+                 <XTermTerminal/>
                 </Tabs.Content>
               </Tabs.Root>
             </div>
@@ -460,7 +474,10 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
             </div>
           )}
         </div>
+
+        
       </div>
+   
     </div>
   );
 }
