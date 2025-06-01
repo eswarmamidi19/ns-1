@@ -406,12 +406,7 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
                       Preview
                     </Tabs.Trigger>
 
-                     <Tabs.Trigger
-                      value="terminal"
-                      className="px-4 py-1 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
-                    >
-                      terminal
-                    </Tabs.Trigger>
+                    
                   </Tabs.List>
                 </div>
 
@@ -460,12 +455,7 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
                   <Preview/>
                 </Tabs.Content>
 
-                  <Tabs.Content
-                  value="terminal"
-                  className="flex-1 p-4 overflow-auto data-[state=active]:flex"
-                >
-                 <XTermTerminal/>
-                </Tabs.Content>
+        
               </Tabs.Root>
             </div>
           ) : (

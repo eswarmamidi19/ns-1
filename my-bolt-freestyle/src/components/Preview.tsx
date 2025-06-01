@@ -5,6 +5,7 @@ import { FileSystemTree, WebContainer } from "@webcontainer/api";
 import { File } from "./file-explorer";
 import { getWebcontainerInstance } from "@/lib/getWebcontainerInstance";
 import { useWebContainer } from "@/lib/useWebContainer";
+import Terminal from "./terminal";
 export function convertToFileSystemTree(files: File[]): FileSystemTree {
   const tree: FileSystemTree = {};
 
@@ -73,6 +74,8 @@ export default function Preview() {
         ref={iframe}
         style={{ width: '100%', height: '100%', border: '1px solid #ccc', marginTop: '1rem' }}
       />   
+
+      <Terminal webcontainerInstance={webContainer!} />
      </div>
   )
 }
