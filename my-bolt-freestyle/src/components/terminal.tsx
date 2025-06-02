@@ -114,3 +114,45 @@ export default function Terminal({ webcontainerInstance }: TerminalProps) {
     </div>
   );
 }
+
+// import { Terminal } from '@xterm/xterm';
+// import { WebContainer } from '@webcontainer/api';
+
+// /**
+//  * @param {Terminal} terminal
+//  * @param {WebContainer} webcontainerInstance
+//  */
+// export async function installDependencies(terminal: Terminal, webcontainerInstance: WebContainer) {
+//   const installProcess = await webcontainerInstance.spawn('npm', ['install']);
+
+//   installProcess.output.pipeTo(new WritableStream({
+//     write(data) {
+//       terminal.write(data);
+//     },
+//   }));
+
+//   return installProcess.exit;
+// }
+
+// /**
+//  * @param {Terminal} terminal
+//  * @param {WebContainer} webcontainerInstance
+//  * @param {HTMLIFrameElement} iframeEl
+//  */
+// export async function startDevServer(
+//   terminal: Terminal,
+//   webcontainerInstance: WebContainer,
+//   iframeEl: HTMLIFrameElement
+// ) {
+//   const serverProcess = await webcontainerInstance.spawn('npm', ['run', 'start']);
+
+//   serverProcess.output.pipeTo(new WritableStream({
+//     write(data) {
+//       terminal.write(data);
+//     },
+//   }));
+
+//   webcontainerInstance.on('server-ready', (port, url) => {
+//     iframeEl.src = url;
+//   });
+// }

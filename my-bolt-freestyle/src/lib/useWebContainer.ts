@@ -26,5 +26,5 @@ export const useWebContainer = () => {
     };
   }, []);
 
-  return { webContainer, error };
+  return { webContainer, error};
 };

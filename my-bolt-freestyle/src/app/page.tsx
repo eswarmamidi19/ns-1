@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import FileExplorer from "@/components/file-explorer";
 import { sampleFiles } from "@/lib/sample-data";
@@ -8,8 +8,8 @@ export default function Home() {
   
  const [ isLoading, setIsLoading ] = useState(true);
  const [files , setFiles] = useState(sampleFiles)
- const [steps , setSteps] = useState([])
-  
+ 
+ 
 
  useEffect(()=>{
     const timer = setTimeout(()=>{
@@ -29,7 +29,7 @@ export default function Home() {
            <ResizableHandle/>
           <ResizablePanel defaultSize={70} className="bg-gray-900">
             <div className="h-full p-4 overflow-auto">
-                <FileExplorer isLoading={isLoading} files={files}/> 
+                <FileExplorer isLoading={isLoading} files={files}  /> 
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>

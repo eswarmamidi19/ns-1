@@ -225,10 +225,10 @@ import {
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
-import * as Tabs from "@radix-ui/react-tabs"; 
+import * as Tabs from "@radix-ui/react-tabs";
 import { Editor } from "@monaco-editor/react";
 import Preview from "./Preview";
-import XTermTerminal from "./terminal";
+import Twrapeer  from "./Twrapper";
 
 export interface File {
   id: string;
@@ -247,13 +247,15 @@ export type FileSelection = File & {
 interface FileExplorerProps {
   files: File[];
   isLoading: boolean;
+
 }
 
-export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
+export default function FileExplorer({ files, isLoading  }: FileExplorerProps) {
   const [expandedFolders, setExpandedFolders] = useState<
     Record<string, boolean>
   >({});
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [activeTab, setActiveTab] = useState("code");
 
   const toggleFolder = (folderId: string) => {
     setExpandedFolders((prev) => ({
@@ -299,7 +301,7 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
         <div
           className={cn(
             "flex items-center py-1 px-2 rounded-md hover:bg-muted/50 cursor-pointer text-sm",
-            selectedFile?.id === item.id && "bg-black text-white",
+            selectedFile?.id === item.id && "bg-black text-white"
           )}
           style={{ paddingLeft: `${level * 12 + 8}px` }}
           onClick={() =>
@@ -365,7 +367,7 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
         <div className="w-1/3 border-r overflow-auto">
           <div className="p-4">
             <h3 className="text-sm font-medium mb-2">Project Files</h3>
-            {renderFileTree(files)}
+            {activeTab === "code" && renderFileTree(files)}
           </div>
         </div>
 
@@ -388,10 +390,14 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
               </div>
 
               {/* Fix: Use proper Radix Tabs with namespace */}
-              <Tabs.Root defaultValue="code" className="flex-1 flex flex-col">
+              <Tabs.Root
+                defaultValue="code"
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="flex-1 flex flex-col"
+              >
                 <div className="border-b px-4 bg-gray-800/80">
                   <Tabs.List className="h-10 flex gap-2 bg-gray-900 rounded-md p-1 w-fit mt-4 mb-2">
-
                     <Tabs.Trigger
                       value="code"
                       className="px-4 py-1 rounded-md data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-colors"
@@ -405,19 +411,17 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
                     >
                       Preview
                     </Tabs.Trigger>
-
-                    
                   </Tabs.List>
                 </div>
 
                 <Tabs.Content
                   value="code"
-                  className="flex-1 data-[state=active]:flex"
+                  className="flex-1 data-[state=active]:flex flex-col"
                 >
                   {/* Debug: Add some logging */}
 
                   <Editor
-                    height="100%"
+                    height="70%"
                     language={getLanguageFromFileName(selectedFile.name)}
                     value={selectedFile.content || "// No content available"}
                     theme="vs-dark"
@@ -445,17 +449,18 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
                       automaticLayout: true,
                       renderValidationDecorations: "off", // This hides the warning decorations
                     }}
-                  />
+                  /> 
+
+
+                   <Twrapeer />
                 </Tabs.Content>
 
                 <Tabs.Content
                   value="preview"
                   className="flex-1 p-4 overflow-auto data-[state=active]:flex"
                 >
-                  <Preview/>
+                  <Preview />
                 </Tabs.Content>
-
-        
               </Tabs.Root>
             </div>
           ) : (
@@ -464,10 +469,7 @@ export default function FileExplorer({ files, isLoading }: FileExplorerProps) {
             </div>
           )}
         </div>
-
-        
       </div>
-   
     </div>
   );
 }

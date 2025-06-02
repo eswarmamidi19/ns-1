@@ -30,3 +30,5 @@ export const getWebcontainerInstance = async (): Promise<WebContainer> => {
   window.__webcontainerInstance__ = await window.__bootingPromise__;
   return window.__webcontainerInstance__;
 };
+
+
