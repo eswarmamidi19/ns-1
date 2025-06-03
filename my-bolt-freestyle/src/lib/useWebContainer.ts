@@ -8,21 +8,21 @@ export const useWebContainer = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    let isCancelled = false;
+    let isInitialized = false;
 
     const init = async () => {
       try {
         const container = await getWebcontainerInstance();
-        if (!isCancelled) setWebContainer(container);
+        if (!isInitialized) setWebContainer(container);
       } catch (err) {
-        if (!isCancelled) setError(err as Error);
+        if (!isInitialized) setError(err as Error);
       }
     };
 
     init();
 
     return () => {
-      isCancelled = true;
+      isInitialized = true;
     };
   }, []);
 

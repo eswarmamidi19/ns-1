@@ -7,8 +7,6 @@ import { getWebcontainerInstance } from "@/lib/getWebcontainerInstance";
 import { useWebContainer } from "@/lib/useWebContainer";
 import Terminal from "./terminal";
 
-let hasInitialized = false;
-
 export function convertToFileSystemTree(files: File[]): FileSystemTree {
   const tree: FileSystemTree = {};
 
@@ -32,10 +30,10 @@ export default function Preview() {
   const iframe = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    if (!webContainer || hasInitialized) return;
+    if (!webContainer) return;
 
     const run = async () => {
-      hasInitialized = true;
+  
 
       setStatus("Mounting project files...");
       await webContainer.mount(convertToFileSystemTree(sampleFiles));
@@ -75,13 +73,20 @@ export default function Preview() {
 
 
   return(
+
+    
      <div className="border rounded-md p-6 w-full h-full flex items-center justify-center">
+
+      { status && (
+        <div className="text-center mb-4">    
+          <p className="text-lg font-semibold">{status}</p>
+          </div> )
+      }
                  <iframe
         ref={iframe}
         style={{ width: '100%', height: '100%', border: '1px solid #ccc', marginTop: '1rem' }}
       />   
 
-      {/* <Terminal webcontainerInstance={webContainer!} /> */}
      </div>
   )
 }
